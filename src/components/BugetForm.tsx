@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 export default function BugetForm() {
 
@@ -7,6 +7,10 @@ export default function BugetForm() {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setBudget(e.target.valueAsNumber)  
     }
+
+    const isValid = useMemo(() => {
+        return isNaN(budget) || budget <= 0      
+    }, [budget])
 
     return (
         <form className='space-y-5'>
@@ -27,7 +31,8 @@ export default function BugetForm() {
             <input
                 type="submit"
                 value={'Definir Presupuesto'}
-                className='bg-blue-600 hover:bg-blue-700 w-full p-2 text-white uppercase font-black cursor-pointer'
+                className='bg-blue-600 hover:bg-blue-700 w-full p-2 text-white uppercase font-black cursor-pointer disabled:opacity-40'
+                disabled={isValid}
             />
         </form>
     )
