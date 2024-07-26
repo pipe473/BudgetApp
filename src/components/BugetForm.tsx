@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 
-export default function BugetForm() {
+export default function BudgetForm() {
 
     const [budget, setBudget] = useState(0)
 

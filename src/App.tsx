@@ -1,12 +1,6 @@
-import { useContext } from "react"
-import BugetForm from "./components/BugetForm"
-import { BudgetContext } from "./context/BudgetContext"
+import BudgetForm from './components/BugetForm'
 
 function App() {
-
-  const context = useContext(BudgetContext)
-
-  console.log(context);
   
 
   return (
@@ -18,7 +12,7 @@ function App() {
       </header>
 
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
-        <BugetForm />
+        <BudgetForm />
       </div>
     </>
   )
