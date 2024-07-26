@@ -2,11 +2,13 @@ export type BudgetActions =
     { type: 'add-budget', payload: { budget: number } }
 
 export type BudgetState = {
-    budget: number
+    budget: number,
+    auth: boolean
 }
 
 export const initialState: BudgetState = {
-    budget: 0
+    budget: 0,
+    auth: true
 }
 
 export const budgetReducer = (
