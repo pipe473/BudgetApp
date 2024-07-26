@@ -5,11 +5,11 @@ export default function BugetForm() {
     const [budget, setBudget] = useState(0)
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setBudget(e.target.valueAsNumber)  
+        setBudget(e.target.valueAsNumber)
     }
 
     const isValid = useMemo(() => {
-        return isNaN(budget) || budget <= 0      
+        return isNaN(budget) || budget <= 0
     }, [budget])
 
     return (
