@@ -26,6 +26,7 @@ const isValidBudget = useMemo(() => state.budget > 0, [state.budget])
       {
         isValidBudget && (
           <main className='max-w-3xl mx-auto py-10'>
+            
             <ExpenseModal />
           </main>
         )
