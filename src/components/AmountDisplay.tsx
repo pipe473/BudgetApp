@@ -1,7 +1,7 @@
 import { formatCurrency } from "../helpers"
 
 type AmountDisplayProps = {
-    label: string
+    label?: string
     amount: number
 }
 export default function AmountDisplay({ label, amount }: AmountDisplayProps) {
