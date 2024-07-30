@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import type { DraftExpense, Value } from "../types"
 import { categories } from "../data/categories"
 import DatePicker from 'react-date-picker'
@@ -16,7 +16,14 @@ export default function ExpenseForm() {
     })
 
     const [error, setError] = useState('')
-    const { dispatch } = useBudget()
+    const { dispatch, state } = useBudget()
+
+    useEffect(() => {
+        if (state.editingId) {
+            const editingExpense = state.expenses.filter(currentExpense => currentExpense.id === state.editingId)[0]
+            setExpense(editingExpense)
+        }
+    }, [state.editingId])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         const { name, value } = e.target
@@ -42,8 +49,12 @@ export default function ExpenseForm() {
             setError('Todos los campos son obligatorios')
             return
         }
-        // Agregar un nuevo gasto
-        dispatch({ type: 'add-expense', payload: { expense } })
+        // Agregar o actualizar el gasto
+        if (state.editingId) {
+            dispatch({ type: 'update-expense', payload: { expense: { id: state.editingId, ...expense } } })
+        } else {
+            dispatch({ type: 'add-expense', payload: { expense } })
+        }
 
         // Reiniciar el state
         setExpense({
@@ -57,7 +68,7 @@ export default function ExpenseForm() {
     return (
         <form className="space-y-5" onSubmit={handleSubmit}>
             <legend className="uppercase text-center text-2xl font-black border-b-4 border-blue-500 py-2">
-                Nuevo Gasto
+                {state.editingId ? 'Guardar Cambios' : 'Nuevo Gasto'}
             </legend>
 
             {error && <ErrorMessage>{error}</ErrorMessage>}
@@ -69,7 +80,7 @@ export default function ExpenseForm() {
                 <input
                     type="text"
                     id="expenseName"
-                    placeholder="Añade el Nombre del gasto"
+                    placeholder="Añade la cantidad del gasto: ej. 200"
                     className="bg-slate-100 p-2"
                     name="expenseName"
                     value={expense.expenseName}
@@ -83,7 +94,6 @@ export default function ExpenseForm() {
                 <input
                     type="number"
                     id="amount"
-                    placeholder="Añade la cantidad del gasto"
                     className="bg-slate-100 p-2"
                     name="amount"
                     value={expense.amount}
@@ -96,7 +106,6 @@ export default function ExpenseForm() {
                 </label>
                 <select
                     id="category"
-                    placeholder="Añade la cantidad del gasto: ej. 200"
                     className="bg-slate-100 p-2"
                     name="category"
                     value={expense.category}
@@ -126,7 +135,7 @@ export default function ExpenseForm() {
             <input
                 type="submit"
                 className="bg-blue-600 cursor-pointer w-full p-2 text-white uppercase font-bold rounded-lg"
-                value={'Registrar Gasto'}
+                value={state.editingId ? 'Guardar Cambios' :'Registrar Gasto'}
             />
         </form>
     )
