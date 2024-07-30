@@ -19,8 +19,8 @@ export default function ExpenseForm() {
     const { dispatch, state } = useBudget()
 
     useEffect(() => {
-        if(state.editingId) {
-            const editingExpense = state.expenses.filter( currentExpense => currentExpense.id === state.editingId )[0]
+        if (state.editingId) {
+            const editingExpense = state.expenses.filter(currentExpense => currentExpense.id === state.editingId)[0]
             setExpense(editingExpense)
         }
     }, [state.editingId])
@@ -49,8 +49,12 @@ export default function ExpenseForm() {
             setError('Todos los campos son obligatorios')
             return
         }
-        // Agregar un nuevo gasto
-        dispatch({ type: 'add-expense', payload: { expense } })
+        // Agregar o actualizar el gasto
+        if (state.editingId) {
+            dispatch({ type: 'update-expense', payload: { expense: { id: state.editingId, ...expense } } })
+        } else {
+            dispatch({ type: 'add-expense', payload: { expense } })
+        }
 
         // Reiniciar el state
         setExpense({
@@ -89,7 +93,7 @@ export default function ExpenseForm() {
                 </label>
                 <input
                     type="number"
-                    id="amount"                    
+                    id="amount"
                     className="bg-slate-100 p-2"
                     name="amount"
                     value={expense.amount}
@@ -101,7 +105,7 @@ export default function ExpenseForm() {
                     Categoría:
                 </label>
                 <select
-                    id="category"                    
+                    id="category"
                     className="bg-slate-100 p-2"
                     name="category"
                     value={expense.category}
