@@ -69,7 +69,7 @@ export default function ExpenseForm() {
                 <input
                     type="text"
                     id="expenseName"
-                    placeholder="Añade el Nombre del gasto"
+                    placeholder="Añade la cantidad del gasto: ej. 200"
                     className="bg-slate-100 p-2"
                     name="expenseName"
                     value={expense.expenseName}
@@ -82,8 +82,7 @@ export default function ExpenseForm() {
                 </label>
                 <input
                     type="number"
-                    id="amount"
-                    placeholder="Añade la cantidad del gasto"
+                    id="amount"                    
                     className="bg-slate-100 p-2"
                     name="amount"
                     value={expense.amount}
@@ -95,8 +94,7 @@ export default function ExpenseForm() {
                     Categoría:
                 </label>
                 <select
-                    id="category"
-                    placeholder="Añade la cantidad del gasto: ej. 200"
+                    id="category"                    
                     className="bg-slate-100 p-2"
                     name="category"
                     value={expense.category}
